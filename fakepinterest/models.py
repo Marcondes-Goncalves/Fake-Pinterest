@@ -12,7 +12,14 @@ def load_usuario(id_usuario):
 
 # database.Model: com esse parâmatro conseguiremos transformar a classe em uma tabela e uma tabela em uma classe.
 class Usuario(database.Model, UserMixin):
+    """Classe para criar um novo usuário
 
+    id: int OBS: GERADO AUTOMÁTICAMENTE
+    username: str
+    senha: str
+    email: str
+    Return: novo usuário
+    """
     # primary_key = True O ID SERÁ INCREMENTADO AUTOMÁTICAMENTE A CADA NOVO USUÁRIO
     id: int = database.Column(database.Integer, primary_key = True)
 
