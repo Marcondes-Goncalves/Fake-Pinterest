@@ -30,9 +30,9 @@ class Usuario(database.Model, UserMixin):
 class Foto(database.Model):
 
     id: int = database.Column(database.Integer, primary_key = True)
-    imagem = database.Column(database.String, default = "default.png")
+    imagem: str = database.Column(database.String, default = "default.png")
 
-    data_criacao = database.Column(database.DateTime, nullable = False, default = datetime.utcnow())
+    data_criacao: datetime = database.Column(database.DateTime, nullable = False, default = datetime.utcnow())
 
     # chave estrangeira que faz referência ao usuário   # type: ignore[Unknown]
     # note que a classe tem que ser passada em minusculas, pois no banco a mesma será criada com minusculas. 

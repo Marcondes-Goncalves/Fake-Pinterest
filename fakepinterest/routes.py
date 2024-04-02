@@ -13,7 +13,7 @@ def homepage():
 
 
 @app.route("/perfil/<usuario>") # <usuario> SIGNIFICA QUE A TAG USUÁRIO AGORA É UMA VARIÁVEL
-@login_required # SIGNIFICA QUE ESSA FUNÇÃO SÓ PODERÁ SER ACESSADA SER O USUÁRIO SESTIVER LOGADO
+@login_required # SIGNIFICA QUE ESSA FUNÇÃO SÓ PODERÁ SER ACESSADA SER O USUÁRIO ESTIVER LOGADO
 def perfil(usuario):
     return render_template("perfil.html", usuario = usuario)
 #                                                              <usuario> vai ser igual a o usuário que foi passado na função como parâmetro
