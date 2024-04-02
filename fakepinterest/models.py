@@ -1,9 +1,17 @@
 # Criar a estrutura do banco de dados
-from fakepinterest import database
+from fakepinterest import database, login_manager
 from datetime import datetime
+from flask_login import UserMixin # define a classe que vai gerênciar a estrutura de logins
+
+
+# função para retornar o usuário pelo seu id
+@login_manager.user_loader
+def load_usuario(id_usuario):
+    return Usuario.query.get(int(id_usuario))
+
 
 # database.Model: com esse parâmatro conseguiremos transformar a classe em uma tabela e uma tabela em uma classe.
-class Usuario(database.Model):
+class Usuario(database.Model, UserMixin):
 
     # primary_key = True O ID SERÁ INCREMENTADO AUTOMÁTICAMENTE A CADA NOVO USUÁRIO
     id: int = database.Column(database.Integer, primary_key = True)
