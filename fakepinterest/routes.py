@@ -23,7 +23,7 @@ def homepage():
             bcrypt.check_password_hash(usuario.senha, formlogin.senha.data)
 
             login_user(usuario, remember = True)
-            return redirect(url_for("perfil", usuario = usuario.username))
+            return redirect(url_for("perfil", id_usuario = usuario.id))
         
     return render_template("homepage.html", form = formlogin)
 
@@ -48,15 +48,21 @@ def criarconta():
         login_user(usuario, remember = True)
 
         # redirecionando para a página de perfil
-        return redirect(url_for("perfil", usuario = usuario.username))
+        return redirect(url_for("perfil", id_usuario = usuario.id))
     
     return render_template("criarconta.html", form = formcriarconta)
 
 
-@app.route("/perfil/<usuario>") # <usuario> SIGNIFICA QUE A TAG USUÁRIO AGORA É UMA VARIÁVEL
+@app.route("/perfil/<id_usuario>") # <usuario> SIGNIFICA QUE A TAG USUÁRIO AGORA É UMA VARIÁVEL
 @login_required # SIGNIFICA QUE ESSA FUNÇÃO SÓ PODERÁ SER ACESSADA SER O USUÁRIO ESTIVER LOGADO
-def perfil(usuario: str):
-    return render_template("perfil.html", usuario = usuario)
+def perfil(id_usuario: int):
+    if int(id_usuario) == current_user.id:# current_user pega o usuário que está logado
+        # o usuário está vendo o perfil dele
+        return render_template("perfil.html", usuario = current_user)
+    else:
+        # ele está no perfil de outro usuário
+        usuario = Usuario.query.get(int(id_usuario))
+        return render_template("perfil.html", usuario = usuario)
 #                                                              <usuario> vai ser igual a o usuário que foi passado na função como parâmetro
 
 

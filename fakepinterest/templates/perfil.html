@@ -7,9 +7,16 @@
 {% block body %}
 
     <body>
-        <h1>Perfil do usuário: {{ usuario }}</h1>
 
+        <h1>Perfil do usuário: {{ usuario.username }}</h1>
+
+        <!-- Função de logout definida no arquivo de rotas-->
         <a href="{{ url_for('logout')}}">Sair</a>
+
+        {% for foto in usuario.foto %}
+            <img src="">
+        {% endfor %}
+
     </body>
 
 {% endblock %}
