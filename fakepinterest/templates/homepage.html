@@ -15,6 +15,22 @@
         <h2>FakePinterest - Meu primeiro site no ar</h2>
 
         <p>Agora vamos continuar nosso site</p>
+
+        {% block formulario %}
+        <form method="post">
+
+            {{ form.csrf_token }} <!-- .csrf_token é uma validação de segurança para o envio de formulários-->
+
+            {{ form.email.label() }}
+            {{ form.email() }}
+            
+            {{ form.senha.label() }}
+            {{ form.senha() }}
+
+            {{ form.botao_confirmacao() }}
+            
+        </form>
+        {% endblock %}
         
     </body>
     {% endblock %}
