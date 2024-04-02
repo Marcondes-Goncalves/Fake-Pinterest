@@ -13,8 +13,11 @@
         <!-- Função de logout definida no arquivo de rotas-->
         <a href="{{ url_for('logout')}}">Sair</a>
 
-        {% for foto in usuario.foto %}
-            <img src="">
+        <!-- static é o local que armazenamos as imagens. filename é o caminho e o nome da imagem-->
+        <img src="{{ url_for('static', filename = 'fotos_posts/default.png') }}">
+
+        {% for foto in usuario.fotos %}
+            
         {% endfor %}
 
     </body>

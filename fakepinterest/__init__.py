@@ -11,6 +11,8 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///comunidade.db"
 # essa senha foi gerada com o código: print(secrets.token_hex(16))
 app.config["SECRET_KEY"] = "87840091186a87e7eb31b27fca616ab0" 
+# definindo onde será feito os uploads das imagens do usuário
+app.config["UPLOAD_FOLDER"] = "static/fotos_posts"
 
 database = SQLAlchemy(app)
 # CRIPTOGRAFA AS SENHAS
