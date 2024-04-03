@@ -13,6 +13,23 @@ class FormLogin(FlaskForm):
     senha: str = PasswordField("Senha", validators = [DataRequired()])
     botao_confirmacao = SubmitField("Fazer Login")
 
+    # Quando criar funções de validação temos que passar validate (_NOME DO CAMPO QUE VAI SER VALIDADO)
+    def validate_email(self, email: str):
+        """Função para verificar se o E-mail digitado já foi cadastrado.
+        email: str | atributo email do FormCriarConta
+        Return: Se o email já estiver cadastrado retorna um erro pedindo para o usuário logar na conta.
+        """
+        # email.data SIGNIFICA QUE ESTAMOS PEGANDO A INFORMAÇÃO QUE FOI PREENCHIDA NO CAMPO DE EMAIL
+        usuario = Usuario.query.filter_by(email = email.data).first() 
+        if not usuario:
+            raise ValidationError("Esse usuário não existe, crie uma conta!")
+        
+    # Quando criar funções de validação temos que passar validate (_NOME DO CAMPO QUE VAI SER VALIDADO)
+    def validate_senha(self, email: str):
+        usuario = Usuario.query.filter_by(email = email.data).first() 
+        if not usuario:
+            raise ValidationError("Senha incorreta, tente novamente ou crie uma conta!")
+
 
 class  FormCriarConta(FlaskForm):
 
@@ -24,13 +41,6 @@ class  FormCriarConta(FlaskForm):
     confirmacao_senha: str = PasswordField("Confirmação de Senha", validators = [DataRequired(), EqualTo("senha")])
 
     botao_confirmacao = SubmitField("Criar Conta")
-    
-
-class FormFoto(FlaskForm):
-
-    # FileField é a estrutura que permite carregar arquivos
-    foto = FileField("Foto", validators = [DataRequired()])
-    botao_confirmacao = SubmitField("Enviar")
 
     # Quando criar funções de validação temos que passar validate (_NOME DO CAMPO QUE VAI SER VALIDADO)
     def validate_email(self, email: str):
@@ -41,4 +51,14 @@ class FormFoto(FlaskForm):
         # email.data SIGNIFICA QUE ESTAMOS PEGANDO A INFORMAÇÃO QUE FOI PREENCHIDA NO CAMPO DE EMAIL
         usuario = Usuario.query.filter_by(email = email.data).first() 
         if usuario:
-            return ValidationError("E-mail já cadastrado, faça login para continuar")
+            raise ValidationError("E-mail já cadastrado, faça login para continuar!")
+    
+
+class FormFoto(FlaskForm):
+
+    # FileField é a estrutura que permite carregar arquivos
+    foto = FileField("Foto", validators = [DataRequired()])
+    botao_confirmacao = SubmitField("Enviar")
+
+    
+    

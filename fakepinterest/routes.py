@@ -22,10 +22,10 @@ def homepage():
         if usuario:
             # VERIFICAR SE A SENHA DO USUÁRIO ESTÁ CORRETA
             # MAS ANTES DISSO TEMOS QUE DISCRIPTOGRAFAR A SENHA PARA COMPARAR COM A SENHA QUE FOI DIGITADA NO CAMPO DE LOGIN
-            bcrypt.check_password_hash(usuario.senha, formlogin.senha.data)
-
-            login_user(usuario, remember = True)
-            return redirect(url_for("perfil", id_usuario = usuario.id))
+            compara_senha = bcrypt.check_password_hash(usuario.senha, formlogin.senha.data)
+            if compara_senha == True:
+                login_user(usuario, remember = True)
+                return redirect(url_for("perfil", id_usuario = usuario.id))
         
     return render_template("homepage.html", form = formlogin)
 
