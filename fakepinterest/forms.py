@@ -6,6 +6,7 @@ from wtforms import StringField, PasswordField, SubmitField, FileField # Campo d
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 
 from fakepinterest.models import Usuario
+from fakepinterest import bcrypt
 
 class FormLogin(FlaskForm):
 
@@ -26,9 +27,11 @@ class FormLogin(FlaskForm):
         
     # Quando criar funções de validação temos que passar validate (_NOME DO CAMPO QUE VAI SER VALIDADO)
     def validate_senha(self, email: str):
-        usuario = Usuario.query.filter_by(email = email.data).first() 
-        if not usuario:
-            raise ValidationError("Senha incorreta, tente novamente ou crie uma conta!")
+        usuarioBanco = Usuario.query.filter_by(email = email.data).first() 
+        if usuarioBanco:
+            compara_senha = bcrypt.check_password_hash(usuarioBanco.senha, self.usuario.senha.data)
+            if compara_senha != True:
+                raise ValidationError("Senha incorreta, tente novamente ou crie uma conta!")
 
 
 class  FormCriarConta(FlaskForm):
