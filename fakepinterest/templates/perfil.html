@@ -5,26 +5,53 @@
     {% endblock %}
 
 {% block body %}
-    <body>
+<body>
+    {% include "navbar.html" %}
 
-        {% include "navbar.html" %}
+        <div class="container">
+            {% if form %} <!-- enctype="multipart/form-data" ESSE PARÂMETRO PERMITE ENVIAR AS IMAGENS SEM NENHUM TIPO DE ERRO-->
+                <form class="bloco-add-img" method="post" enctype="multipart/form-data">
+                    {{ form.csrf_token }} <!-- PARÂMETRO DE SEGURANÇA-->
+                    <h2>{{ usuario.username }} - Enviar foto</h2>
 
-        <h1>Perfil do usuário: {{ usuario.username }}</h1>
+                    <div class="bloco-arquivo">
+                        <label for="foto" class="botao-arquivo">
+                            Escolher arquivo
+                            {{ form.foto(class="input-arquivo", id = "foto") }}
+                        </label>
+                        <span id = "imagem-arquivo" class=""></span>
+                    </div>
+                        {{ form.botao_confirmacao(class="botao-login") }}
+                </form>
+            {% else %}
+                <div class="bloco-add-img">
+                    <h2>{{ usuario.username }}</h2>
+                </div>
+            {% endif %}
+        </div>
 
-        {% if form %} <!-- enctype="multipart/form-data" ESSE PARÂMETRO PERMITE ENVIAR AS IMAGENS SEM NENHUM TIPO DE ERRO-->
-            <form method="post" enctype="multipart/form-data">
-                {{ form.csrf_token }} <!-- PARÂMETRO DE SEGURANÇA-->
+        <div class="conteudo">
+            {% for foto in usuario.fotos %}
+                <div class="bloco-imagem">
+                    <!-- static é o local que armazenamos as imagens. filename é o caminho e o nome da imagem-->
+                    <img src="{{ url_for('static', filename = 'fotos_posts/{}'.format(foto.imagem)) }}"/>
+                </div>
+            {% endfor %}
+        </div>
 
-                {{ form.foto() }}
+        <script>
+            let input = document.getElementById("foto")
+            let imagemArquivo = document.getElementById("imagem-arquivo")
+        
+            input.addEventListener("change", () => {
+                let inputImagem = document.querySelector("input[type=file]").files[0];
+        
+                imagemArquivo.classList.add("visivel");
+                imagemArquivo.innerText = inputImagem.name;
+            });
+        </script>
 
-                {{ form.botao_confirmacao() }}
-            </form>
-        {% endif %}
-
-        {% for foto in usuario.fotos %}
-        <!-- static é o local que armazenamos as imagens. filename é o caminho e o nome da imagem-->
-        <img src="{{ url_for('static', filename = 'fotos_posts/{}'.format(foto.imagem)) }}">
-        {% endfor %}
-
-    </body>
+</body>
 {% endblock %}
+
+  
