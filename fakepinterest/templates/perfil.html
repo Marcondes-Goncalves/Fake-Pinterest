@@ -1,8 +1,8 @@
 {% extends "homepage.html" %}
 
-{% block titulo %}
-    Perfil - {{usuario}}
-{% endblock %}
+    {% block titulo %}
+        Perfil - {{ usuario }}
+    {% endblock %}
 
 {% block body %}
 
@@ -10,13 +10,23 @@
 
         <h1>Perfil do usuário: {{ usuario.username }}</h1>
 
+        {% if form %} <!-- enctype="multipart/form-data" ESSE PARÂMETRO PERMITE ENVIAR AS IMAGENS SEM NENHUM TIPO DE ERRO-->
+            <form method="post" enctype="multipart/form-data">
+                {{ form.csrf_token }} <!-- PARÂMETRO DE SEGURANÇA-->
+
+                {{ form.foto() }}
+
+                {{ form.botao_confirmacao() }}
+            </form>
+        {% endif %}
+
         <!-- Função de logout definida no arquivo de rotas-->
         <a href="{{ url_for('logout')}}">Sair</a>
 
-        <!-- static é o local que armazenamos as imagens. filename é o caminho e o nome da imagem-->
-        <img src="{{ url_for('static', filename = 'fotos_posts/default.png') }}">
-
         {% for foto in usuario.fotos %}
+
+        <!-- static é o local que armazenamos as imagens. filename é o caminho e o nome da imagem-->
+        <img src="{{ url_for('static', filename = 'fotos_posts/{}'.format(foto.imagem)) }}">
             
         {% endfor %}
 
