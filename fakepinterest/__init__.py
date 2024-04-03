@@ -4,11 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 
+import os
+
 
 app = Flask(__name__)
 
 # AQUI DEFINIMOS QUAL BANCO IREMOS CRIAR
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///comunidade.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 # essa senha foi gerada com o código: print(secrets.token_hex(16))
 app.config["SECRET_KEY"] = "87840091186a87e7eb31b27fca616ab0" 
 # definindo onde será feito os uploads das imagens do usuário
