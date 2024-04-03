@@ -5,8 +5,9 @@
     {% endblock %}
 
 {% block body %}
-
     <body>
+
+        {% include "navbar.html" %}
 
         <h1>Perfil do usuário: {{ usuario.username }}</h1>
 
@@ -20,16 +21,10 @@
             </form>
         {% endif %}
 
-        <!-- Função de logout definida no arquivo de rotas-->
-        <a href="{{ url_for('logout')}}">Sair</a>
-
         {% for foto in usuario.fotos %}
-
         <!-- static é o local que armazenamos as imagens. filename é o caminho e o nome da imagem-->
         <img src="{{ url_for('static', filename = 'fotos_posts/{}'.format(foto.imagem)) }}">
-            
         {% endfor %}
 
     </body>
-
 {% endblock %}

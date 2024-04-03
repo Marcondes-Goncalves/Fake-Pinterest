@@ -1,0 +1,16 @@
+{% extends "homepage.html" %}
+
+
+{% block body %}
+
+    {% include "navbar.html" %}
+
+    <h1>Feed Principal</h1>
+
+    {% for foto in fotos %}
+        <a href="{{ url_for('perfil', id_usuario = foto.id_usuario) }}"> <!-- static é o local que armazenamos as imagens. filename é o caminho e o nome da imagem-->
+            <img src="{{ url_for('static', filename = 'fotos_posts/{}'.format(foto.imagem)) }}">
+        </a>
+    {% endfor %}
+
+{% endblock %}
