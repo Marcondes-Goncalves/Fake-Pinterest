@@ -1,18 +1,21 @@
 {% extends "homepage.html" %}
 
-
 {% block body %}
 
     {% include "navbar.html" %}
 
-    <h1 class="titulo">Feed Principal</h1>
-
-    {% for foto in fotos %}
-        <!-- Se o usuárop clicar em uma foto no Feed ele é redirecionado para o perfil dessa pessoa-->
-        <a href="{{ url_for('perfil', id_usuario = foto.id_usuario) }}"> 
-            <!-- static é o local que armazenamos as imagens. filename é o caminho e o nome da imagem-->
-            <img src="{{ url_for('static', filename = 'fotos_posts/{}'.format(foto.imagem)) }}">
-        </a>
-    {% endfor %}
-
+    <body>
+        <div class="container">
+            <div class="conteudo">
+                {% for foto in fotos %}
+                <!-- Se o usuárop clicar em uma foto no Feed ele é redirecionado para o perfil dessa pessoa-->
+                <a href="{{ url_for('perfil', id_usuario = foto.id_usuario) }}" class="bloco-imagem">
+                    <!-- static é o local que armazenamos as imagens. filename é o caminho e o nome da imagem-->
+                    <img src="{{ url_for('static', filename = 'fotos_posts/{}'.format(foto.imagem)) }}"/>
+                </a>
+                {% endfor %}
+          </div>
+        </div>
+    </body>
+    
 {% endblock %}
