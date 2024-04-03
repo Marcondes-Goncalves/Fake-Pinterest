@@ -12,7 +12,7 @@ import os
 from werkzeug.utils import secure_filename
 
 # Definindo a rota do nosso site
-@app.route('/', methods = ["GET", "POST"])
+@app.route("/", methods = ["GET", "POST"])
 def homepage():
     formlogin = FormLogin()
 
@@ -46,7 +46,7 @@ def criarconta():
         database.session.commit()
 
         # após criar a conta essa função loga o usuário
-        # remember = True LEMBRA QUE O USUÁRIO ESTÁ LOGADO SE ELE FECHAR A PÁGINA E VOLTAR
+        # remember = True LEMBRA QUE O USUÁRIO ESTÁ LOGADO MESMO SE ELE FECHAR A PÁGINA E VOLTAR
         login_user(usuario, remember = True)
 
         # redirecionando para a página de perfil
