@@ -22,7 +22,7 @@ def homepage():
         if usuario:
             # VERIFICAR SE A SENHA DO USUÁRIO ESTÁ CORRETA
             # MAS ANTES DISSO TEMOS QUE DISCRIPTOGRAFAR A SENHA PARA COMPARAR COM A SENHA QUE FOI DIGITADA NO CAMPO DE LOGIN
-            compara_senha = bcrypt.check_password_hash(usuario.senha, formlogin.senha.data)
+            compara_senha = bcrypt.check_password_hash(usuario.senha.encode("utf-8"), formlogin.senha.data)
             if compara_senha == True:
                 login_user(usuario, remember = True)
                 return redirect(url_for("perfil", id_usuario = usuario.id))
@@ -37,7 +37,7 @@ def criarconta():
     if formcriarconta.validate_on_submit():
 
         # Criptografa a senha do usuário
-        senha = bcrypt.generate_password_hash(formcriarconta.senha.data)
+        senha = bcrypt.generate_password_hash(formcriarconta.senha.data).decode("utf-8")
         # Criando uma instância do usuario
         usuario = Usuario(username = formcriarconta.username.data, email = formcriarconta.email.data, senha = senha)
 

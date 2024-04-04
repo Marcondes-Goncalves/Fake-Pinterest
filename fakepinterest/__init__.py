@@ -10,6 +10,8 @@ import os
 app = Flask(__name__)
 
 # AQUI DEFINIMOS QUAL BANCO IREMOS CRIAR
+# os.getenv("DATABASE_URL")
+
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 # essa senha foi gerada com o código: print(secrets.token_hex(16))
 app.config["SECRET_KEY"] = "87840091186a87e7eb31b27fca616ab0" 
